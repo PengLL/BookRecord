@@ -1,25 +1,27 @@
 <template>
 <div id="app">
-  <pl-slide-bar>
-  </pl-slide-bar>
-  <pl-main>
-  </pl-main>
+  <pl-slide-bar></pl-slide-bar>
+  <transition name="router-fade">
+    		<router-view></router-view>
+  </transition>    
   <pl-dialog-Collection></pl-dialog-Collection>
 </div>
 </template>
 
 <script>
-import PlMain from './components/PlMain'
+
 import PlDialogCollection from './components/PlDialogCollection'
 import plSlideBar from './components/plSlideBar'
+import fastclick from 'fastclick';
 
 export default {
   name: 'app',
   created(){
     this.$store.dispatch("init");
+    console.log(fastclick);
+    fastclick.attach(document.body);
   },
   components:{
-    PlMain:PlMain,
     PlDialogCollection:PlDialogCollection,
     plSlideBar:plSlideBar
   },
@@ -28,7 +30,8 @@ export default {
 </script>
 <style lang="scss">
 html,body{
-  font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+  font:16px/1.5;
+  font-family:'Helvetica Neue', Helvetica,'Microsoft Yahei', 'Hiragino Sans GB', '微软雅黑', Arial, sans-serif;
   background-color: #ECF0F1;
 }
 html,body,div,p,ul,li,hr{
@@ -41,11 +44,21 @@ html,body{
   overflow-x:hidden;
 }
 span,div,li,button{
-  -webkit-tap-highlight-color:rgba(255,0,0,0);
-}
-#app{ 
-   font-size:18px;
+  -webkit-tap-highlight-color:transparent;
 }
 
+#app{ 
+   margin:0;
+   padding:0;
+   font-size:16px;
+   width:100%;
+   height:100%;
+}
+.router-fade-enter-active, .router-fade-leave-active {
+	  	transition: opacity .2s;
+}
+.router-fade-enter, .router-fade-leave-active {
+    opacity: 0;
+}
 
 </style>

@@ -1,96 +1,112 @@
 <template>
-	<div class="pldialog" :class="{'PlDialogCollection-fadeOut':fadeOut}">
-		<div class="pldialog-mask" @click="hideDialog"></div>
-		<div class="pldialog-content pldialog-scale ">
-		<div :class="{'pldialog-error':error}">
-			<ul>
-				<li v-for="item in errorInfo">{{item}}</li>
-			</ul>
-		</div>
-		<div class="pldialog-body">
-			<slot></slot>
-		</div>
-		<slot name="foot"></slot>
+<transition name="PlDialog-fade">
+	<div class="PlDialog-wrapper" @click.self="hideDialog">
+		<div class="PlDialog">
+			<div class="PlDialog-header">
+				{{title}}
+			</div>
+			<div class="PlDialog-body">
+				<div class="PlDialog-info">
+					<ul>
+						<li v-for="item in info">{{item}}</li>
+					</ul>
+				</div>
+				<slot name="body"></slot>
+			</div>
+			<div class="PlDialog-footer">
+				<slot name="footer"></slot>
+			</div>
 		</div>
 	</div>
+</transition>
 </template>
 <script>
 	import LocalStore from '../assets/js/LocalStore'
 	export default{
-		data(){
-			return {
-				error:false
-			}
-		},
 		props:{
-			errorInfo:{
+			info:{
 				type:Array
-			}
-		},
-		computed:{
-			fadeOut(){
-				return this.$store.state.PlDialogCollection.fadeOut;
-			}
-		},
-		watch:{
-			errorInfo(){
-				this.errorInfo==[] ? this.error=true : this.error=false;
+			},
+			title:{
+				type:String
 			}
 		},
 		methods:{
 			hideDialog(){
-				this.$store.dispatch("fadeOutDialog");
+				this.$store.dispatch("hideDialog");
 			}
 		}
 	}
 </script>
-<style lang="scss">
-	.pldialog{
-		width:100%;
-		height:100%;
-		position: fixed;
+<style lang="scss" scoped>
+	.PlDialog-wrapper{
+		position:fixed;
 		top: 0;
 		left: 0;
-		z-index: 9;
-	}
-	.pldialog-mask{
-		width:100%;
-		height:100%;
+		right:0;
+		bottom:0;
+		overflow:auto;
+		z-index: 11;
 		background-color:rgba(0,0,0,0.25);
 	}
-	.pldialog-content{
-		border: 1px solid #ddd;
-		background-color:#fff;
-		width: 9rem;
-		position: fixed;
-		box-sizing: border-box;
-		z-index: 10;
+	.PlDialog{
+		position: absolute;
 		top: 3rem;
-		text-align:center;
 		left: 0.5rem;
+		background-color:#fff;
+		animation:translate 0.2s ease-out;
+		width: 9rem;
 		box-shadow: 0.213333rem 0.213333rem 0.213333rem #444;
 	}	
-	.pldialog-body{
-		margin-top:0.3rem;
-		margin-bottom:0.3rem;
+	.PlDialog-header{
+		line-height:1.4rem;
+		padding:0 0.4rem;
+		color:#1E70A7;
+		border-bottom:1px solid #eee;
 	}
-	.pldialog-scale{
+	.PlDialog-body{
+		padding:0.4rem;
+	}
+	.PlDialog-footer{
+		border-top:1px solid #eee;
+		color:#1E70A7;
+		text-align:center;
+		line-height:1.4rem;
+	}
+	.PlDialog-scale{
 		animation:scale 0.4s linear; 	
 	}
-	.pldialog-error{
-		color:#E74C3C;
+	.PlDialog-info{
+		line-height:0.6rem;
 		font-size:14px;
-		padding-left:0.533333rem;
-		padding-top:0.266667rem;
-		display:none;
+		color:#E74C3C;
+		ul{
+			list-style:none;
+			li:last-child{
+				margin-bottom:0.4rem;
+			}
+		}
 	}
-	@keyframes scale{
-		from{		
-			transform:scale(0);
+	.PlDialog-fade-leave-active{
+		animation:PlDialogFadeOut .3s linear;
+	}
+	.PlDialog-footer:active{
+		background:rgba(0,0,0,0.05) !important;
+	}
+	@keyframes PlDialogFadeOut{
+		from{
+			opacity:1;
 		}
 		to{
-			transform:scale(1);
+			opacity:0;
 		}
 	}
-	
+	@keyframes translate{
+		from{		
+			transform:translateY(-30px);
+		}
+		to{
+			transform:translateY(0);
+		}
+	}
 </style>

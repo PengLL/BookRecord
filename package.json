@@ -9,7 +9,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.1.10"
+    "better-scroll": "^0.1.15",
+    "fastclick": "^1.0.6",
+    "iscroll": "^5.2.0",
+    "vue": "^2.1.10",
+    "vue-router": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -44,7 +48,6 @@
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.1.10",
     "vuex": "^2.1.2",
-    "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",

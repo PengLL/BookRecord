@@ -1,4 +1,3 @@
-const STORAGE_KEY="readingBooks";
 
 export default{
 	key:"readingBooks",

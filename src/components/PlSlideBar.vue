@@ -1,56 +1,82 @@
 <template>
-	<div class="PlSlideBar" :class="{'PlSlideBar-slide':slideBar}">
-		<div class="PlSlideBar-head">
-			<div>
-				<span @click="showCatDia" class="fa fa-pencil-square fa-2x"></span>
+	<div>
+		<transition name="SlideBar">
+			<div v-show="slide" class="PlSlideBar-wrapper" @click.self="hideSlideBar">
 			</div>
-		</div>
-		<div class="PlSlideBar-body">
-			<ul>
-				<li v-for="(item,index) in categories" 
-				>
-				<span @click="chooseCategory(index)" class="PlSlideBar-name" :class="{'PlSlideBar-active':item.status}" >{{item.name}}</span>
-				<span class="fa fa-trash-o fa-lg PlSlideBar-delete" @click="showdelCatDia(index)"></span>
-			</li>
-		</ul>
+		</transition>
+		<transition name="Bar">
+			<div class="PlSlideBar" v-show="slide">
+					<div class="PlSlideBar-head">
+						<div>
+							<span @click="showCatDia" class="fa fa-plus fa-2x"></span>
+						</div>
+					</div>
+					<div class="PlSlideBar-body">
+						<ul>
+							<li 
+							v-for="(item,index) in categories">
+								<span @click="chooseCategory(index)" class="PlSlideBar-name" :class="{'PlSlideBar-name-active':item.status}" >{{item.name}}</span>
+								<span class="fa fa-trash-o fa-lg PlSlideBar-delete" @click="showdelCatDia(index)"></span>
+							</li>
+					</ul>
+				</div>
+			</div>
+		</transition>
+		
 	</div>
-</div>
 </template>
 <script>
 	import LocalStore from '../assets/js/LocalStore'
 	export default{
 		computed:{
-			slideBar(){
-				return this.$store.state.PlSlideBar.slideBarStatus;
-			},
 			categories(){
 				return this.$store.state.PlSlideBar.categories;
+			},
+			slide(){
+				return this.$store.state.PlSlideBar.slideBarStatus;
 			}
 		},
 		methods:{
 			showCatDia(){
-				this.$store.commit("showCatDia");
+				this.$store.dispatch("showCategoryDialog");
 			},
 			chooseCategory(index){
-				this.$store.commit("chooseCategory",index);
+				this.$store.dispatch("chooseCategory",index);
 			},
 			showdelCatDia(index){
-				this.$store.commit("setDeleteIndex",index);
-				this.$store.commit("showdelCatDia");
+				this.$store.dispatch("showDeleteCategoryDialog",index);
+			},
+			hideSlideBar(){
+				this.$store.dispatch("setSlidebarStatus",false);
 			}
 		}
 	}
 </script>
-<style lang="scss">
+<style lang="scss"scoped>
+	.SlideBar-enter-active{
+		animation:fadeIn 0.2s linear;
+	}
+	.SlideBar-leave-active{
+		animation:fadeOut 0.2s linear;
+	}
+	.PlSlideBar-wrapper{
+		position:fixed;
+		left:0;
+		top:0;
+		z-index:9;
+		background-color:rgba(0,0,0,0.25);
+		width:10rem;
+		height:100%;
+	}
 	.PlSlideBar{
 		width: 6rem;
 		height: 100%;
 		position:fixed;
-		left:-6rem;
 		top:0;
-		background-color:#DBDBDB;
-		transition:left 0.2s linear;
-		z-index:4;
+		z-index:10;
+		background-color:#ebebeb;
+		box-shadow: 8px 0px 6px #666;
+		overflow-x:hidden;
 		.PlSlideBar-head{
 			width: 100%;
 			height:2.4rem;
@@ -62,13 +88,16 @@
 				color:#fff;
 				margin-right:0.6rem;
 			}
+			span:active{
+				opacity:0.5 !important;
+			}
 		}
 		.PlSlideBar-body{
 			width:100%;
 			padding-top:0.4rem;
 			ul{
 				li{
-					height:1.4rem;
+					height:1.5rem;
 					padding-left:0.2rem;
 					display:flex;
 					justify-content:space-between;
@@ -77,23 +106,61 @@
 			}
 		}
 	}
-	.PlSlideBar-slide{
-		left:0;
-		box-shadow: 5px 5px 6px #666;
-	}
 	.PlSlideBar-name{
 		box-sizing:border-box;
 		padding-left:0.2rem;
 		flex:4;
-		line-height:0.8rem;
+		line-height:1rem;
+		font-size:20px;
 	}
 	.PlSlideBar-delete{
 		flex:1;
 		align-self:center;
 		color:#888;
 	}
-	.PlSlideBar-active{
+	.PlSlideBar-delete:active{
+		opacity:0.8 !important
+	}
+	.PlSlideBar-name-active{
 		border-left:0.1rem solid #3498DB;
 		color:#3498DB;
+	}
+	.Bar-enter-active{
+		animation:slideOut 0.2s linear;
+	}
+	.Bar-leave-active{
+		animation:slideIn 0.2s linear;
+	}
+	@keyframes fadeIn{
+		from{
+			opacity:0;
+		}
+		to{
+			opacity:1;
+		}
+	}
+	@keyframes fadeOut{
+		from{	
+			opacity:1;
+		}
+		to{
+			opacity:0;
+		}
+	}
+	@keyframes slideOut{
+		from{
+			left:-6rem;
+		}
+		to{
+			left:0rem;
+		}
+	}
+	@keyframes slideIn{
+		from{
+			left:0rem;
+		}
+		to{
+			left:-6rem;
+		}
 	}
 </style>

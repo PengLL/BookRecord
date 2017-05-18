@@ -1,48 +1,75 @@
+
+import * as types from '../mutation-types';
+
 export default{
 	state:{
-		categoryDialog:true,
-		bookDialog:true,
-		progressDialog:true,
-		deleteCatDialog:true,
-		msg:[],
-		fadeOut:false
+		categoryDialog:false,
+		bookDialog:false,
+		progressDialog:false,
+		deleteCatDialog:false,
+		bookInfo:[],
+		progressInfo:[],
+		categoryInfo:[]
 	},
 	mutations:{
-		hideDialog(state){
-			state.categoryDialog=true;
-			state.bookDialog=true;
-			state.progressDialog=true;
-			state.deleteCatDialog=true;
-			state.fadeOut=false;
-		},
-		showCatDia(state){
-			state.msg=[];
+		// 将dialog状态全部reset为false,fadeOut reset为false,msg reset为[]
+		[types.HIDE_DIALOG](state){
 			state.categoryDialog=false;
-		},
-		showBoDia(state){
-			state.msg=[];
 			state.bookDialog=false;
-		},
-		showProDia(state){
-			state.msg=[];
 			state.progressDialog=false;
-		},
-		showdelCatDia(state){
-			state.msg=[];
 			state.deleteCatDialog=false;
+			state.bookInfo=[];
+			state.categoryInfo=[];
+			state.progressInfo=[];
 		},
-		addErrorInfo(state,msg){
-			state.msg=msg;
+		[types.SHOW_CATEGORY_DIALOG](state){
+			state.categoryDialog=true;
+		},
+		[types.SHOW_BOOK_DIALOG](state){
+			state.bookDialog=true;
+		},
+		[types.SHOW_PROGRESS_DIALOG](state){
+			state.progressDialog=true;
+		},
+		[types.SHOW_DELETE_CATEGORY_DIALOG](state){
+			state.deleteCatDialog=true;
+		},
+		[types.ADD_BOOK_INFO](state,msg){
+			state.bookInfo=msg;
+		},
+		[types.ADD_PROGRESS_INFO](state,msg){
+			state.progressInfo=msg;
+		},
+		[types.ADD_CATEGORY_INFO](state,msg){
+			state.categoryInfo=msg;
 		}
 	},
 	actions:{
-		// 在hideDialog中将fadeout效果重置为false
-		fadeOutDialog({commit,state}){
-			state.fadeOut=true;
-			setTimeout(function(){
-				commit("hideDialog");
-			},180);
+		showCategoryDialog({commit}){
+			commit(types.SHOW_CATEGORY_DIALOG);
+		},
+		showBookDialog({commit}){
+			commit(types.SHOW_BOOK_DIALOG);
+		},
+		showDeleteCategoryDialog({commit},index){
+			commit(types.SHOW_DELETE_CATEGORY_DIALOG);
+			commit(types.SET_DELETE_CATEGORY_INDEX,index);
+		},
+		showProgressDialog({commit},index){
+			commit(types.SET_EDIT_BOOK_INDEX,index);
+			commit(types.SHOW_PROGRESS_DIALOG);
+		},
+		addBookInfo({commit},msg){
+			commit(types.ADD_BOOK_INFO,msg);
+		},
+		addCategoryInfo({commit},msg){
+			commit(types.ADD_CATEGORY_INFO,msg);
+		},
+		addProgressInfo({commit},msg){
+			commit(types.ADD_PROGRESS_INFO,msg);
+		},
+		hideDialog({commit}){
+			commit(types.HIDE_DIALOG);
 		}
 	}
-
 }

@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<transition name="SlideBar">
-			<div v-show="slide" class="PlSlideBar-wrapper" @click.self="hideSlideBar">
+			<div v-show="slideBarStatus" class="PlSlideBar-wrapper" @click.self="setSlidebarStatus(false)">
 			</div>
 		</transition>
 		<transition name="Bar">
-			<div class="PlSlideBar" v-show="slide">
+			<div class="PlSlideBar" v-show="slideBarStatus">
 					<div class="PlSlideBar-head">
 						<div>
-							<span @click="showCatDia" class="fa fa-plus fa-2x"></span>
+							<span @click="showCategoryDialog" class="fa fa-plus fa-2x"></span>
 						</div>
 					</div>
 					<div class="PlSlideBar-body">
@@ -16,39 +16,33 @@
 							<li 
 							v-for="(item,index) in categories">
 								<span @click="chooseCategory(index)" class="PlSlideBar-name" :class="{'PlSlideBar-name-active':item.status}" >{{item.name}}</span>
-								<span class="fa fa-trash-o fa-lg PlSlideBar-delete" @click="showdelCatDia(index)"></span>
+								<span class="fa fa-trash-o fa-lg PlSlideBar-delete" @click="showDeleteCategoryDialog(index)"></span>
 							</li>
 					</ul>
 				</div>
 			</div>
 		</transition>
-		
 	</div>
 </template>
 <script>
 	import LocalStore from '../assets/js/LocalStore'
+	import {mapActions,mapGetters} from 'vuex';
 	export default{
-		computed:{
-			categories(){
-				return this.$store.state.PlSlideBar.categories;
-			},
-			slide(){
-				return this.$store.state.PlSlideBar.slideBarStatus;
-			}
+		computed:mapGetters([
+			'categories',
+			'slideBarStatus'
+		]),
+		mounted(){
+			this.getCategories();
 		},
 		methods:{
-			showCatDia(){
-				this.$store.dispatch("showCategoryDialog");
-			},
-			chooseCategory(index){
-				this.$store.dispatch("chooseCategory",index);
-			},
-			showdelCatDia(index){
-				this.$store.dispatch("showDeleteCategoryDialog",index);
-			},
-			hideSlideBar(){
-				this.$store.dispatch("setSlidebarStatus",false);
-			}
+			...mapActions([
+				'showCategoryDialog',
+				'chooseCategory',
+				'showDeleteCategoryDialog',
+				'setSlidebarStatus',
+				'getCategories'
+			])
 		}
 	}
 </script>

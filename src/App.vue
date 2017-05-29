@@ -17,13 +17,11 @@ import fastclick from 'fastclick';
 export default {
   name: 'app',
   created(){
-    this.$store.dispatch("init");
-    console.log(fastclick);
     fastclick.attach(document.body);
   },
   components:{
-    PlDialogCollection:PlDialogCollection,
-    plSlideBar:plSlideBar
+    PlDialogCollection,
+    plSlideBar
   },
 
 }

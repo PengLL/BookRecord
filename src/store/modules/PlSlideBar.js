@@ -9,6 +9,11 @@ export default{
 		deleteIndex:0,
 		STORAGE_KEY_CATEGORY:"readingCategory"
 	},
+	getters:{
+		slideBarStatus:state=>state.slideBarStatus,
+		category:state=>state.category,
+		categories:state=>state.categories
+	},
 	mutations:{
 		[types.SET_SLIDEBAR_STATUS](state,status){
 			state.slideBarStatus=status;
@@ -32,22 +37,21 @@ export default{
 		[types.DELETE_CATEGORY](state){
 			state.categories.splice(state.deleteIndex,1);
 		},
-		[types.SAVE_CATEGORIES_TO_LOCALSTORAGE](state){
-			LocalStore.key=state.STORAGE_KEY_CATEGORY;
-			LocalStore.save(state.categories);
+		[types.GET_CATEGORIES](state,data){
+			state.categories=data;
 		}
 	},
 	actions:{
 		chooseCategory({commit},index){
 			commit(types.CHOOSE_CATEGORY,index);
 		},
-		deleteCategory({commit,state}){
+		deleteCategory({commit,state,dispatch}){
 			let category=state.categories[state.deleteIndex].name;
 			commit(types.DELETE_CATEGORY_BOOKS,category);
-			commit(types.SAVE_BOOKS_TO_LOCALSTORAGE);
+			dispatch("saveBooks");
 			state.category==category ? state.category="":null;
 			commit(types.DELETE_CATEGORY);
-			commit(types.SAVE_CATEGORIES_TO_LOCALSTORAGE);
+			dispatch("saveCategories");
 		},
 		addCategory({commit,dispatch},category){
 			let msg=[];
@@ -57,12 +61,21 @@ export default{
 				dispatch("addCategoryInfo",msg);
 			else{
 				commit(types.ADD_CATEGORY,category);
-				commit(types.SAVE_CATEGORIES_TO_LOCALSTORAGE);
+				dispatch("saveCategories");
 				dispatch("hideDialog");
 			}	
 		},
 		setSlidebarStatus({commit},status){
 			commit(types.SET_SLIDEBAR_STATUS,status);
+		},
+		saveCategories({state}){
+			LocalStore.key=state.STORAGE_KEY_CATEGORY;
+			LocalStore.save(state.categories);
+		},
+		getCategories({state,commit}){
+			LocalStore.key=state.STORAGE_KEY_CATEGORY;
+			commit(types.GET_CATEGORIES,LocalStore.fetch());
+			state.categories[0] ? commit(types.CHOOSE_CATEGORY,0) :null;
 		}
 	}
 }

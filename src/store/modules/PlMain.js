@@ -7,24 +7,18 @@ export default {
 		editIndex: 0,
 		STORAGE_KEY_BOOK: "readingBooks"
 	},
+	getters:{
+		books:state=>state.books
+	},
 	mutations: {
+		[types.GET_BOOKS](state,data){
+			state.books=data;
+		},
 		[types.ADD_BOOK](state, book) {
 			state.books.push(book);
 		},
 		[types.SET_EDIT_BOOK_INDEX](state, index) {
 			state.editIndex = index;
-		},
-		[types.SAVE_BOOKS_TO_LOCALSTORAGE](state) {
-			LocalStore.key = state.STORAGE_KEY_BOOK;
-			LocalStore.save(state.books);
-		},
-		[types.SAVE_BOOK_PROGRESS](state, readedPages) {
-			let element = state.books[state.editIndex];
-			element.readedPages = readedPages;
-			element.progress = parseInt(readedPages / element.pages * 100) + "%";
-		},
-		[types.DELETE_BOOK](state, index) {
-			state.books.splice(index, 1);
 		},
 		[types.DELETE_CATEGORY_BOOKS](state, category) {
 			let len = state.books.length;
@@ -34,10 +28,9 @@ export default {
 		}
 	},
 	actions: {
-		deleteBook({commit,state}, index) {
-			commit(types.DELETE_BOOK, index);
-			console.log(state.books[200]==undefined);
-			commit(types.SAVE_BOOKS_TO_LOCALSTORAGE);
+		deleteBook({commit,state,dispatch}, index) {
+			state.books.splice(index, 1);
+			dispatch("saveBooks");
 		},
 		addBook({commit,dispatch}, book) {
 			let msg=[];
@@ -55,7 +48,7 @@ export default {
 				dispatch("addBookInfo", msg);
 			else {
 				commit(types.ADD_BOOK, book);
-				commit(types.SAVE_BOOKS_TO_LOCALSTORAGE);
+				dispatch("saveBooks");
 				dispatch("hideDialog");
 			}
 		},
@@ -70,10 +63,20 @@ export default {
 			if(msg.length>0)
 				dispatch("addProgressInfo", msg);
 			else {
-				commit(types.SAVE_BOOK_PROGRESS, readedPages);
-				commit(types.SAVE_BOOKS_TO_LOCALSTORAGE);
+				let element = state.books[state.editIndex];
+				element.readedPages = readedPages;
+				element.progress = parseInt(readedPages / element.pages * 100) + "%";
+				dispatch("saveBooks");
 				dispatch("hideDialog");
 			}
+		},
+		getBooks({commit,state}){
+			LocalStore.key=state.STORAGE_KEY_BOOK;
+			commit(types.GET_BOOKS,LocalStore.fetch());
+		},
+		saveBooks({state}){
+			LocalStore.key = state.STORAGE_KEY_BOOK;
+			LocalStore.save(state.books);
 		}
 	}
 }

@@ -4,7 +4,8 @@ export const ADD_CATEGORY="PlSlideBar/addCategory";
 export const CHOOSE_CATEGORY="PlSlideBar/chooseCategory";
 export const SET_DELETE_CATEGORY_INDEX="PlSlideBar/setDeleteCategoryIndex";
 export const DELETE_CATEGORY="PlSlideBar/deleteCategory";
-export const SAVE_CATEGORIES_TO_LOCALSTORAGE="PlSlideBar/saveCategoriesToLocalstorage";
+export const GET_CATEGORIES="GET_CATEGORIES";
+
 //PlDialogCollection.js mutations
 export const SHOW_DELETE_CATEGORY_DIALOG="PlDialogCollection/ShowDeleteCategoryDialog";
 export const HIDE_DIALOG="PlDialogCollection/hideDialog";
@@ -16,9 +17,8 @@ export const ADD_CATEGORY_INFO="PlDialogCollection/addCategoryInfo";
 export const ADD_PROGRESS_INFO="PlDialogCollection/addProgressInfo";
 
 // PlMain.js mutations
+export const GET_BOOKS="GET_BOOKS";
 export const ADD_BOOK="PlMain/addBook";
 export const SET_EDIT_BOOK_INDEX="PlMain/setEditBookIndex";
-export const SAVE_BOOKS_TO_LOCALSTORAGE="PlMain/saveBooksToLocalstorage";
-export const SAVE_BOOK_PROGRESS="PlMain/saveBookProgress";
 export const DELETE_BOOK="PlMain/deleteBook";
 export const DELETE_CATEGORY_BOOKS="PlMain/deleteCategoryBooks";

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-	import router from '../router';
+	import router from '../../../router';
 	import BScroll from 'better-scroll';
 	import {mapActions,mapGetters} from 'vuex';
 

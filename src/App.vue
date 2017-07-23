@@ -10,8 +10,8 @@
 
 <script>
 
-import PlDialogCollection from './components/PlDialogCollection'
-import plSlideBar from './components/plSlideBar'
+import PlDialogCollection from './components/Dialog/PlDialogCollection'
+import plSlideBar from './components/Index/Children/PlSlideBar'
 import fastclick from 'fastclick';
 
 export default {

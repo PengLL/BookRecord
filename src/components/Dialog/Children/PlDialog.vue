@@ -21,7 +21,7 @@
 </transition>
 </template>
 <script>
-	import LocalStore from '../assets/js/LocalStore'
+	import LocalStore from '../../../assets/js/LocalStore'
 	export default{
 		props:{
 			info:{

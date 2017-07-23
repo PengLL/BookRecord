@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import PlDialog from './PlDialog'
+	import PlDialog from './Children/PlDialog'
 	export default{
 		data(){
 			return {

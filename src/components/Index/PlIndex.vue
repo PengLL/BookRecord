@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import PlHeader from './PlHeader';
-import PlMain from './PlMain';
+import PlHeader from './Children/PlHeader';
+import PlMain from './Children/PlMain';
 export default{
     components:{
         PlMain:PlMain,

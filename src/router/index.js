@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import PlBookDetail from '../components/PlBookDetail';
-import PlIndex from '../components/PlIndex';
+import PlIndex from '../components/Index/PlIndex';
 
 Vue.use(VueRouter);
 

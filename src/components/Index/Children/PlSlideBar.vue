@@ -25,7 +25,7 @@
 	</div>
 </template>
 <script>
-	import LocalStore from '../assets/js/LocalStore'
+	import LocalStore from '../../../assets/js/LocalStore'
 	import {mapActions,mapGetters} from 'vuex';
 	export default{
 		computed:mapGetters([

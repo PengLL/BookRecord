@@ -17,9 +17,9 @@
 
 
 **开发环境：**
->-  node 6.9.2     
->- npm  4.2.0    
->- webpack 2.2.1
+>node 6.9.2     
+npm  4.2.0    
+webpack 2.2.1
 
 **用git启动项目：**
 ``` bash
@@ -54,13 +54,13 @@ src/store      //vuex状态管理器的内容
 6.fastclick处理移动端点击事件
 ## 三 项目分析
 1.从上一部分的项目结构和Tips我们可以看到，该项目虽小，但是五脏俱全，移动端的多屏适应和基本事件处理都有所涉及，通过这个小项目我们可以练习以下几个内容
->- vue2.0
->- vuex
- >- vue-router
- >- ES6
- >- webpack
- >- 多屏适应
- >- 移动端事件处理
+> vue2.0
+>vuex
+ > vue-router
+ > ES6
+ > webpack
+ > 多屏适应
+ >移动端事件处理
 
 2.我们通过Localstorage来模拟后端数据的增删改查
 

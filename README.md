@@ -15,11 +15,11 @@
 ![详情页.png](http://upload-images.jianshu.io/upload_images/1916203-edef84a465b9a2c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-**项目地址:**  [https://github.com/PengLL/BookRecord](https://github.com/PengLL/BookRecord)
+
 **开发环境：**
 >-  node 6.9.2     
-- npm  4.2.0    
-- webpack 2.2.1
+ - npm  4.2.0    
+ - webpack 2.2.1
 
 **用git启动项目：**
 ``` bash
@@ -55,12 +55,12 @@ src/store      //vuex状态管理器的内容
 ## 三 项目分析
 1.从上一部分的项目结构和Tips我们可以看到，该项目虽小，但是五脏俱全，移动端的多屏适应和基本事件处理都有所涉及，通过这个小项目我们可以练习以下几个内容
 >- vue2.0
-- vuex
-- vue-router
-- ES6
-- webpack
-- 多屏适应
-- 移动端事件处理
+ - vuex
+ - vue-router
+ - ES6
+ - webpack
+ - 多屏适应
+ - 移动端事件处理
 
 2.我们通过Localstorage来模拟后端数据的增删改查
 

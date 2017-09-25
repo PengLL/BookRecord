@@ -17,9 +17,9 @@
 
 
 **开发环境：**
->-  node 6.9.2     
- - npm  4.2.0    
- - webpack 2.2.1
+> -  node 6.9.2     
+  - npm  4.2.0    
+  - webpack 2.2.1
 
 **用git启动项目：**
 ``` bash
